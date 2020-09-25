@@ -1,0 +1,12 @@
+bin/
+obj/
+*.user
+IsaGRAF/
+Toolkit/
+*.suo
+*.bak
+Exor/
+web/Reports/
+
+#Ignore Visual Studio .vs folder.
+.vs/
