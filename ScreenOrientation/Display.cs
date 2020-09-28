@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+
+
+//code lifted from https://stackoverflow.com/questions/39288135/rotating-the-display-programmatically
+//all credit to Yosh
+
+
 public class Display
 {
     public enum Orientations

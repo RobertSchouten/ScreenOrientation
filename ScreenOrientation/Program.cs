@@ -29,8 +29,8 @@ namespace ScreenOrientation
         {
             //get key to determine if rotation lock is on or not (also not enabled in laptop mode)
             
-            var val =Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AutoRotation", "Enable", false);
-            return Convert.ToBoolean(val);
+            var value =Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AutoRotation", "Enable", false);
+            return Convert.ToBoolean(value);
         }
         static void Main(string[] args)
         {

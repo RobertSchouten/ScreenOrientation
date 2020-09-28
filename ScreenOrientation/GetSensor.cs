@@ -44,7 +44,7 @@ namespace ScreenOrientation
                 Console.WriteLine("accelerometer not found");
             }
 
-            ////how frequently 
+            //how frequently 
             _accelerometer.ReportInterval = Math.Max(_accelerometer.MinimumReportInterval, 1000000);
 
         }
@@ -55,13 +55,13 @@ namespace ScreenOrientation
         private void processReading(AccelerometerReading reading)
         {
             if (Program.getSlateState())
-            {
+            { //if in laptop mode ensure screen is locked to keyboard even if upside down
                 rotateScreen(true);
             }
             else
             {
                 if (Program.getRotationLock())
-                {
+                { //checks if user has rotation lock enabled which should bypass this rotation to permit portrait mode
                     if (reading.AccelerationY < -0.30)
                     {
                         rotateScreen(true);
