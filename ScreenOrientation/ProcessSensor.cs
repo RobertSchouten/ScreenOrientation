@@ -10,57 +10,41 @@ using System.Threading;
 
 namespace ScreenOrientation
 {
-    public class GetSensor
+    public class ProcessSensor
     {
-        private Accelerometer _accelerometer;
+        public Accelerometer _accelerometer;
         private AccelerometerReadingType type = AccelerometerReadingType.Standard;
         private bool currentlyUp;
-        private bool usePolling = true;
-        public GetSensor()
+        public ProcessSensor()
         {
             _accelerometer = Accelerometer.GetDefault(type);
             if (_accelerometer != null)
             {
                 Console.WriteLine("accelerometer ready");
 
-                if (usePolling)
+                //while should be running replace with proper
+                while (true)
                 {
-                    //while should be running replace with proper
-                    while (true)
-                    {
-                        //get accelerometer and proccess
-                        processReading(_accelerometer.GetCurrentReading());
-                        Thread.Sleep(50);
-                    }
+                    //get accelerometer and proccess
+                    processReading(_accelerometer.GetCurrentReading());
+                    Thread.Sleep(50);
                 }
-                else
-                {
-                    //subscribe function to run on accelerometer change
-                    _accelerometer.ReadingChanged += ReadingChanged;
-                }
+                
             }
             else
             {
-                Console.WriteLine("accelerometer not found");
+                throw new Exception("accelerometer not found");
             }
-
-            //how frequently 
-            _accelerometer.ReportInterval = Math.Max(_accelerometer.MinimumReportInterval, 1000000);
-
-        }
-        private void ReadingChanged(object sender, AccelerometerReadingChangedEventArgs e)
-        {
-            processReading(e.Reading);
         }
         private void processReading(AccelerometerReading reading)
         {
-            if (Program.getSlateState())
+            if (Helpers.getSlateState())
             { //if in laptop mode ensure screen is locked to keyboard even if upside down
                 rotateScreen(true);
             }
             else
             {
-                if (Program.getRotationLock())
+                if (Helpers.getRotationLock())
                 { //checks if user has rotation lock enabled which should bypass this rotation to permit portrait mode
                     if (reading.AccelerationY < -0.30)
                     {
